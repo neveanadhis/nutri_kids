@@ -19,10 +19,10 @@ export default async function QuizPage() {
 
   if (!questions || questions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-teal-50 to-blue-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <div className="text-center">
           <div className="text-4xl mb-4">🤔</div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">No Quiz Questions Available</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">No Quiz Questions Available</h1>
           <p className="text-gray-600">Please check back later!</p>
         </div>
       </div>
@@ -30,8 +30,8 @@ export default async function QuizPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-blue-50 p-4">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen bg-white">
+      <div className="max-w-3xl mx-auto px-6 py-8">
         <QuizInterface questions={questions} userId={data.user.id} />
       </div>
     </div>

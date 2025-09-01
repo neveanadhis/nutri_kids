@@ -113,26 +113,20 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-4xl font-bold text-teal-600 text-balance">Nutrition Quiz! 🧠</h1>
+        <h1 className="text-4xl font-bold text-gray-900 text-balance">Nutrition Quiz! 🧠</h1>
         <p className="text-lg text-gray-600 text-pretty">Test your knowledge and learn something new</p>
       </div>
 
-      <Card className="bg-white shadow-lg">
+      <Card className="bg-white shadow-sm border border-gray-200">
         <CardContent className="p-6">
           <div className="space-y-3">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-gray-600">Progress</span>
-              <span className="text-sm font-medium text-teal-600">
+              <span className="text-sm font-medium text-gray-900">
                 {currentQuestionIndex + 1} of {questions.length}
               </span>
             </div>
-            <Progress
-              value={progress}
-              className="h-3 bg-gray-200 transition-all duration-500 ease-out"
-              style={{
-                background: "linear-gradient(to right, #14b8a6, #06b6d4)",
-              }}
-            />
+            <Progress value={progress} className="h-3 bg-gray-200" />
             <div className="flex justify-between text-xs text-gray-500">
               <span>Just started! 🚀</span>
               <span>Almost done! 🎉</span>
@@ -151,7 +145,7 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
         />
       </div>
 
-      <Card className="bg-white shadow-lg">
+      <Card className="bg-white shadow-sm border border-gray-200">
         <CardContent className="p-6">
           <div className="flex justify-between items-center">
             <Button
@@ -169,7 +163,7 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
                   key={index}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentQuestionIndex
-                      ? "bg-teal-500 scale-125"
+                      ? "bg-red-500 scale-125"
                       : selectedAnswers[questions[index].id]
                         ? "bg-green-400"
                         : "bg-gray-300"
@@ -181,7 +175,7 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
             <Button
               onClick={handleNext}
               disabled={!showAnswerFeedback || isLoading}
-              className="bg-gradient-to-r from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 disabled:opacity-50"
+              className="bg-red-500 hover:bg-red-600 disabled:opacity-50"
             >
               {isLoading ? "Saving..." : isLastQuestion ? "Finish Quiz 🎯" : "Next →"}
             </Button>

@@ -48,11 +48,11 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-4">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="min-h-screen bg-white">
+      <div className="max-w-4xl mx-auto px-6 py-8 space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold text-purple-600 text-balance">Your Profile 👤</h1>
+          <h1 className="text-4xl font-bold text-gray-900 text-balance">Your Profile 👤</h1>
           <p className="text-lg text-gray-600 text-pretty">Track your progress and show off your achievements!</p>
         </div>
 

@@ -39,12 +39,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-green-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-white flex items-center justify-center p-6">
       <div className="w-full max-w-sm">
-        <Card className="shadow-xl">
+        <Card className="shadow-sm border border-gray-200">
           <CardHeader className="text-center">
             <div className="text-4xl mb-2">🍎</div>
-            <CardTitle className="text-2xl text-green-600">Welcome Back!</CardTitle>
+            <CardTitle className="text-2xl text-gray-900">Welcome Back!</CardTitle>
             <CardDescription>Sign in to continue your nutrition journey</CardDescription>
           </CardHeader>
           <CardContent>
@@ -72,17 +72,13 @@ export default function LoginPage() {
                   />
                 </div>
                 {error && <p className="text-sm text-red-500">{error}</p>}
-                <Button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600"
-                  disabled={isLoading}
-                >
+                <Button type="submit" className="w-full bg-red-500 hover:bg-red-600" disabled={isLoading}>
                   {isLoading ? "Signing in..." : "Sign In 🚀"}
                 </Button>
               </div>
               <div className="mt-4 text-center text-sm">
                 Don't have an account?{" "}
-                <Link href="/auth/sign-up" className="text-green-600 underline underline-offset-4 hover:text-green-700">
+                <Link href="/auth/sign-up" className="text-red-500 underline underline-offset-4 hover:text-red-600">
                   Sign up
                 </Link>
               </div>

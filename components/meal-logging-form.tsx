@@ -65,10 +65,10 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
 
   if (feedback) {
     return (
-      <Card className="bg-white shadow-xl">
+      <Card className="bg-white shadow-sm border border-gray-200">
         <CardHeader className="text-center">
           <div className="text-4xl mb-2">{feedback.score >= 4 ? "🌟" : feedback.score >= 3 ? "👍" : "💪"}</div>
-          <CardTitle className="text-2xl text-green-600">Great job logging your meal!</CardTitle>
+          <CardTitle className="text-2xl text-gray-900">Great job logging your meal!</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Nutrition Score */}
@@ -85,9 +85,9 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
           </div>
 
           {/* AI Feedback */}
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <h3 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">🤖 Nutrition Assistant Says:</h3>
-            <p className="text-blue-700">{feedback.message}</p>
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">🤖 Nutrition Assistant Says:</h3>
+            <p className="text-gray-700">{feedback.message}</p>
           </div>
 
           {/* Tips */}
@@ -107,16 +107,13 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
-            <Button
-              onClick={handleLogAnother}
-              className="flex-1 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600"
-            >
+            <Button onClick={handleLogAnother} className="flex-1 bg-red-500 hover:bg-red-600">
               Log Another Meal 🍎
             </Button>
             <Link href="/" className="flex-1">
               <Button
                 variant="outline"
-                className="w-full border-2 border-green-300 hover:border-green-400 bg-transparent"
+                className="w-full border-2 border-gray-300 hover:border-gray-400 bg-transparent"
               >
                 Back to Dashboard 🏠
               </Button>
@@ -128,9 +125,9 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
   }
 
   return (
-    <Card className="bg-white shadow-xl">
+    <Card className="bg-white shadow-sm border border-gray-200">
       <CardHeader>
-        <CardTitle className="text-2xl text-center text-gray-800">What did you eat? 🤔</CardTitle>
+        <CardTitle className="text-2xl text-center text-gray-900">What did you eat? 🤔</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -159,7 +156,7 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
             <Button
               type="submit"
               disabled={!mealDescription.trim() || isLoading}
-              className="flex-1 h-12 text-lg bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600"
+              className="flex-1 h-12 text-lg bg-red-500 hover:bg-red-600"
             >
               {isLoading ? "Getting Feedback..." : "Get Nutrition Feedback! 🚀"}
             </Button>

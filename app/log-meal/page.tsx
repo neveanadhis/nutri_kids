@@ -11,11 +11,11 @@ export default async function LogMealPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-green-50 p-4">
-      <div className="max-w-2xl mx-auto space-y-6">
+    <div className="min-h-screen bg-white">
+      <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold text-orange-600 text-balance">Log Your Meal! 🍽️</h1>
+          <h1 className="text-4xl font-bold text-gray-900 text-balance">Log Your Meal! 🍽️</h1>
           <p className="text-lg text-gray-600 text-pretty">
             Tell us what you ate and get personalized nutrition feedback
           </p>
