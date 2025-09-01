@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import DashboardStats from "@/components/dashboard-stats"
-import QuickActions from "@/components/quick-actions"
-import ProgressOverview from "@/components/progress-overview"
-import RecentActivity from "@/components/recent-activity"
+import { QuickActions } from "@/components/quick-actions"
+import { ProgressOverview } from "@/components/progress-overview"
+import { RecentActivity } from "@/components/recent-activity"
 import { SubscriptionStatus } from "@/components/subscription-status"
 
 export default async function HomePage() {
@@ -12,6 +12,12 @@ export default async function HomePage() {
   const { data, error } = await supabase.auth.getUser()
   if (error || !data?.user) {
     redirect("/auth/login")
+  }
+
+  const dummyProgressData = {
+    correctAnswers: 0,
+    totalQuestions: 0,
+    recentMeals: [],
   }
 
   return (
@@ -37,7 +43,7 @@ export default async function HomePage() {
 
         {/* Progress and Activity Grid */}
         <div className="grid lg:grid-cols-2 gap-8">
-          <ProgressOverview />
+          <ProgressOverview {...dummyProgressData} />
           <RecentActivity />
         </div>
       </div>
