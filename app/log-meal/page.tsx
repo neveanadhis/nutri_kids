@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { MealLoggingForm } from "@/components/meal-logging-form"
+import { UsageGuard } from "@/components/usage-guard"
 
 export default async function LogMealPage() {
   const supabase = await createClient()
@@ -21,8 +22,9 @@ export default async function LogMealPage() {
           </p>
         </div>
 
-        {/* Meal Logging Form */}
-        <MealLoggingForm userId={data.user.id} />
+        <UsageGuard action="meal_log">
+          <MealLoggingForm userId={data.user.id} />
+        </UsageGuard>
       </div>
     </div>
   )

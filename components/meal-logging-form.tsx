@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { generateNutritionFeedback } from "@/lib/nutrition-feedback"
+import { useSubscription } from "@/hooks/use-subscription"
 import Link from "next/link"
 
 interface MealLoggingFormProps {
@@ -26,6 +27,7 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
   } | null>(null)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
+  const { incrementUsage, isPremium } = useSubscription()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -35,10 +37,8 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
     setError(null)
 
     try {
-      // Generate AI feedback (simulated)
       const nutritionFeedback = generateNutritionFeedback(mealDescription)
 
-      // Save to database
       const supabase = createClient()
       const { error: dbError } = await supabase.from("meals").insert({
         user_id: userId,
@@ -48,6 +48,8 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
       })
 
       if (dbError) throw dbError
+
+      await incrementUsage("meal_logs")
 
       setFeedback(nutritionFeedback)
     } catch (err) {
@@ -71,7 +73,6 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
           <CardTitle className="text-2xl text-gray-900">Great job logging your meal!</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Nutrition Score */}
           <div className="text-center">
             <div className="text-lg font-semibold text-gray-700 mb-2">Nutrition Score</div>
             <div className="flex justify-center gap-1 mb-2">
@@ -84,13 +85,11 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
             <div className="text-sm text-gray-600">{feedback.score}/5 stars</div>
           </div>
 
-          {/* AI Feedback */}
           <div className="bg-gray-50 p-4 rounded-lg">
             <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">🤖 Nutrition Assistant Says:</h3>
             <p className="text-gray-700">{feedback.message}</p>
           </div>
 
-          {/* Tips */}
           {feedback.tips.length > 0 && (
             <div className="bg-green-50 p-4 rounded-lg">
               <h3 className="font-semibold text-green-800 mb-2 flex items-center gap-2">💡 Tips for Next Time:</h3>
@@ -105,7 +104,6 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
             </div>
           )}
 
-          {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
             <Button onClick={handleLogAnother} className="flex-1 bg-red-500 hover:bg-red-600">
               Log Another Meal 🍎
@@ -127,7 +125,12 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
   return (
     <Card className="bg-white shadow-sm border border-gray-200">
       <CardHeader>
-        <CardTitle className="text-2xl text-center text-gray-900">What did you eat? 🤔</CardTitle>
+        <CardTitle className="text-2xl text-center text-gray-900 flex items-center justify-center gap-2">
+          What did you eat? 🤔
+          {isPremium && (
+            <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">Premium</span>
+          )}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -168,7 +171,6 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
           </div>
         </form>
 
-        {/* Helpful Tips */}
         <div className="mt-6 bg-yellow-50 p-4 rounded-lg">
           <h3 className="font-semibold text-yellow-800 mb-2 flex items-center gap-2">💡 Tips for better feedback:</h3>
           <ul className="text-yellow-700 text-sm space-y-1">
@@ -176,6 +178,9 @@ export function MealLoggingForm({ userId }: MealLoggingFormProps) {
             <li>• Include cooking methods (e.g., "grilled chicken", "steamed vegetables")</li>
             <li>• Mention drinks and snacks too!</li>
             <li>• Don't forget about sauces, dressings, or toppings</li>
+            {isPremium && (
+              <li className="text-yellow-600 font-medium">• Premium: Get detailed macro and micronutrient analysis!</li>
+            )}
           </ul>
         </div>
       </CardContent>

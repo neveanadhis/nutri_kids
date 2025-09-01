@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { QuizQuestion } from "@/components/quiz-question"
 import { QuizResults } from "@/components/quiz-results"
+import { useSubscription } from "@/hooks/use-subscription"
 import Link from "next/link"
 
 interface Question {
@@ -35,6 +36,7 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const router = useRouter()
+  const { incrementUsage } = useSubscription()
 
   useEffect(() => {
     const targetProgress = ((currentQuestionIndex + 1) / questions.length) * 100
@@ -85,6 +87,8 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
       const { error } = await supabase.from("quiz_attempts").insert(attempts)
 
       if (error) throw error
+
+      await incrementUsage("quiz_attempts")
 
       setShowResults(true)
     } catch (error) {

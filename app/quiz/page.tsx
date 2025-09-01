@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { QuizInterface } from "@/components/quiz-interface"
+import { UsageGuard } from "@/components/usage-guard"
 
 export default async function QuizPage() {
   const supabase = await createClient()
@@ -32,7 +33,9 @@ export default async function QuizPage() {
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-3xl mx-auto px-6 py-8">
-        <QuizInterface questions={questions} userId={data.user.id} />
+        <UsageGuard action="quiz_attempt">
+          <QuizInterface questions={questions} userId={data.user.id} />
+        </UsageGuard>
       </div>
     </div>
   )
