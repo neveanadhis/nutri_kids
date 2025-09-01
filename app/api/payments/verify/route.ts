@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { flutterwaveClient } from "@/lib/flutterwave/client"
+import { flutterwaveServer } from "@/lib/flutterwave/server"
 import { createServerClient } from "@/lib/supabase/server"
 import { SUBSCRIPTION_PLANS } from "@/lib/subscription-plans"
 
@@ -11,8 +11,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing transaction details" }, { status: 400 })
     }
 
-    // Verify payment with Flutterwave
-    const verification = await flutterwaveClient.verifyPayment(transaction_id)
+    const verification = await flutterwaveServer.verifyPayment(transaction_id)
 
     if (verification.status === "success" && verification.data.status === "successful") {
       const supabase = createServerClient()

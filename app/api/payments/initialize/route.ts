@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { flutterwaveClient } from "@/lib/flutterwave/client"
+import { flutterwaveServer } from "@/lib/flutterwave/server"
 import { createServerClient } from "@/lib/supabase/server"
 import { SUBSCRIPTION_PLANS } from "@/lib/subscription-plans"
 
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
       },
     }
 
-    const response = await flutterwaveClient.initializePayment(paymentData)
+    const response = await flutterwaveServer.initializePayment(paymentData)
 
     if (response.status === "success") {
       // Store pending payment in database

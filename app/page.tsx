@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import DashboardStats from "@/components/dashboard-stats"
-import { QuickActions } from "@/components/quick-actions"
-import { ProgressOverview } from "@/components/progress-overview"
-import { RecentActivity } from "@/components/recent-activity"
+import QuickActions from "@/components/quick-actions"
+import ProgressOverview from "@/components/progress-overview"
+import RecentActivity from "@/components/recent-activity"
 import { SubscriptionStatus } from "@/components/subscription-status"
 
 export default async function HomePage() {

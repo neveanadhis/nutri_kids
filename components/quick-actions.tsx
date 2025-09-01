@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export function QuickActions() {
+export default function QuickActions() {
   return (
     <Card className="bg-white shadow-lg">
       <CardHeader>

@@ -7,7 +7,7 @@ interface ProgressOverviewProps {
   recentMeals: any[]
 }
 
-export function ProgressOverview({ correctAnswers, totalQuestions, recentMeals }: ProgressOverviewProps) {
+export default function ProgressOverview({ correctAnswers, totalQuestions, recentMeals }: ProgressOverviewProps) {
   const progressPercentage = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0
   const mealsThisWeek = recentMeals.length
   const weeklyGoal = 7 // 1 meal per day

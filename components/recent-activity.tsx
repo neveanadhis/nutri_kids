@@ -5,7 +5,7 @@ interface RecentActivityProps {
   recentBadges: any[]
 }
 
-export function RecentActivity({ recentMeals, recentBadges }: RecentActivityProps) {
+export default function RecentActivity({ recentMeals, recentBadges }: RecentActivityProps) {
   const hasActivity = recentMeals.length > 0 || recentBadges.length > 0
 
   return (
