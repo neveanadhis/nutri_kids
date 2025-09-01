@@ -30,12 +30,12 @@ interface QuizInterfaceProps {
 export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({})
+  const [showAnswerFeedback, setShowAnswerFeedback] = useState(false)
   const [showResults, setShowResults] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const router = useRouter()
 
-  // Animate progress bar
   useEffect(() => {
     const targetProgress = ((currentQuestionIndex + 1) / questions.length) * 100
     setProgress(targetProgress)
@@ -50,6 +50,7 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
       ...prev,
       [questionId]: answer,
     }))
+    setShowAnswerFeedback(true)
   }
 
   const handleNext = () => {
@@ -57,12 +58,14 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
       handleFinishQuiz()
     } else {
       setCurrentQuestionIndex((prev) => prev + 1)
+      setShowAnswerFeedback(false)
     }
   }
 
   const handlePrevious = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex((prev) => prev - 1)
+      setShowAnswerFeedback(false)
     }
   }
 
@@ -72,7 +75,6 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
     try {
       const supabase = createClient()
 
-      // Save quiz attempts to database
       const attempts = questions.map((question) => ({
         user_id: userId,
         question_id: question.id,
@@ -87,7 +89,6 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
       setShowResults(true)
     } catch (error) {
       console.error("Error saving quiz results:", error)
-      // Still show results even if saving fails
       setShowResults(true)
     } finally {
       setIsLoading(false)
@@ -111,13 +112,11 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="text-center space-y-2">
         <h1 className="text-4xl font-bold text-teal-600 text-balance">Nutrition Quiz! 🧠</h1>
         <p className="text-lg text-gray-600 text-pretty">Test your knowledge and learn something new</p>
       </div>
 
-      {/* Progress Bar */}
       <Card className="bg-white shadow-lg">
         <CardContent className="p-6">
           <div className="space-y-3">
@@ -142,17 +141,16 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
         </CardContent>
       </Card>
 
-      {/* Question Card */}
       <div className="transform transition-all duration-300 ease-in-out">
         <QuizQuestion
           question={currentQuestion}
           selectedAnswer={selectedAnswers[currentQuestion.id]}
           onAnswerSelect={handleAnswerSelect}
           questionNumber={currentQuestionIndex + 1}
+          showFeedback={showAnswerFeedback}
         />
       </div>
 
-      {/* Navigation */}
       <Card className="bg-white shadow-lg">
         <CardContent className="p-6">
           <div className="flex justify-between items-center">
@@ -182,7 +180,7 @@ export function QuizInterface({ questions, userId }: QuizInterfaceProps) {
 
             <Button
               onClick={handleNext}
-              disabled={!hasAnsweredCurrent || isLoading}
+              disabled={!showAnswerFeedback || isLoading}
               className="bg-gradient-to-r from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 disabled:opacity-50"
             >
               {isLoading ? "Saving..." : isLastQuestion ? "Finish Quiz 🎯" : "Next →"}
