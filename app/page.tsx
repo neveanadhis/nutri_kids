@@ -20,6 +20,11 @@ export default async function HomePage() {
     recentMeals: [],
   }
 
+  const dummyRecentActivityData = {
+    recentMeals: [],
+    recentBadges: [],
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-green-50">
       <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
@@ -44,7 +49,7 @@ export default async function HomePage() {
         {/* Progress and Activity Grid */}
         <div className="grid lg:grid-cols-2 gap-8">
           <ProgressOverview {...dummyProgressData} />
-          <RecentActivity />
+          <RecentActivity {...dummyRecentActivityData} />
         </div>
       </div>
     </div>
