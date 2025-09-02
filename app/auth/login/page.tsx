@@ -25,9 +25,17 @@ export default function LoginPage() {
     setError(null)
 
     try {
+      const redirectUrl =
+        process.env.NODE_ENV === "production"
+          ? `${window.location.origin}/`
+          : process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/`
+
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
+        options: {
+          emailRedirectTo: redirectUrl,
+        },
       })
       if (error) throw error
       router.push("/")

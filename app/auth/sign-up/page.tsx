@@ -28,11 +28,16 @@ export default function SignUpPage() {
     setError(null)
 
     try {
+      const redirectUrl =
+        process.env.NODE_ENV === "production"
+          ? `${window.location.origin}/`
+          : process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/`
+
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/`,
+          emailRedirectTo: redirectUrl,
           data: {
             display_name: displayName,
             age: Number.parseInt(age) || null,
