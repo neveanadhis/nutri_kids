@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { getAuthRedirectUrl } from "@/lib/auth-utils"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -25,10 +26,7 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      const redirectUrl =
-        process.env.NODE_ENV === "production"
-          ? `${window.location.origin}/`
-          : process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/`
+      const redirectUrl = getAuthRedirectUrl()
 
       const { error } = await supabase.auth.signInWithPassword({
         email,
